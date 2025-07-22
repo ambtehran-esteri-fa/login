@@ -28,6 +28,7 @@
         const user = users.find(u => u.username === username && u.password === password);
 
         if (user) {
+          // فقط در صورت مطابقت کاربر را به لینک هدایت می‌کند
           window.location.href = user.link;
         } else {
           errorDiv.textContent = "نام کاربری یا رمز عبور اشتباه است.";

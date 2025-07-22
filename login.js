@@ -1,26 +1,29 @@
-document.getElementById("loginBtn").addEventListener("click", function () {
+document.getElementById("loginForm").addEventListener("submit", function(e) {
+  e.preventDefault();
+  
   const username = document.getElementById("username").value.trim();
   const password = document.getElementById("password").value.trim();
   const errorDiv = document.getElementById("error");
   const loading = document.getElementById("loading");
-
   errorDiv.textContent = "";
-  loading.style.display = "block";
 
-  fetch("data.json")
-    .then(response => response.json())
-    .then(users => {
-      const user = users.find(u => u.username === username && u.password === password);
-      loading.style.display = "none";
+  loading.style.display = "block"; // نمایش loading
 
-      if (user) {
-        window.location.href = "https://ambtehran-esteri-fa.github.io/-/";
-      } else {
-        errorDiv.textContent = "Invalid username or password.";
-      }
-    })
-    .catch(err => {
-      loading.style.display = "none";
-      errorDiv.textContent = "An error occurred. Please try again later.";
-    });
+  setTimeout(() => {
+    fetch("data.json")
+      .then(response => response.json())
+      .then(users => {
+        const user = users.find(u => u.username === username && u.password === password);
+        if (user) {
+          window.location.href = user.link;
+        } else {
+          errorDiv.textContent = "Incorrect username or password.";
+          loading.style.display = "none"; // مخفی کردن loading در صورت خطا
+        }
+      })
+      .catch(err => {
+        errorDiv.textContent = "Error loading data.";
+        loading.style.display = "none";
+      });
+  }, 5000); // تأخیر 5 ثانیه‌ای
 });

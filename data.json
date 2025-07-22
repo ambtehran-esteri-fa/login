@@ -1,17 +1,7 @@
 [
   {
-    "username": "user1",
-    "password": "pass1",
-    "link": "dashboard1.html"
-  },
-  {
-    "username": "admin",
-    "password": "admin123",
-    "link": "admin.html"
-  },
-  {
-    "username": "user2",
-    "password": "pass2",
-    "link": "dashboard2.html"
+    "username": "tehran",
+    "password": "iran2025",
+    "link": "https://ambtehran-esteri-fa.github.io/-/"
   }
 ]

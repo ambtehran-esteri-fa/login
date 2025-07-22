@@ -1,52 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Login Page</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="icon" type="image/x-icon" href="favicon.ico" />
 </head>
 <body>
   <div class="container">
     <h2>Login</h2>
-    <input type="text" id="username" placeholder="Username">
-    <input type="password" id="password" placeholder="Password">
-    <button onclick="login()">Login</button>
+    <input type="text" id="username" placeholder="Username" />
+    <input type="password" id="password" placeholder="Password" />
+    <button id="loginBtn">Login</button>
     <div id="loading">
-      <img src="loading.gif" alt="Loading..." width="40">
+      <img src="loading.gif" alt="Loading..." />
     </div>
-    <div id="error"></div>
+    <div id="error" class="error"></div>
   </div>
 
-  <script>
-    async function login() {
-      const username = document.getElementById("username").value.trim();
-      const password = document.getElementById("password").value.trim();
-      const errorDiv = document.getElementById("error");
-      const loading = document.getElementById("loading");
-
-      errorDiv.textContent = "";
-      loading.style.display = "block";
-
-      try {
-        const response = await fetch("data.json");
-        const users = await response.json();
-
-        const user = users.find(u => u.username === username && u.password === password);
-
-        setTimeout(() => {
-          loading.style.display = "none";
-          if (user) {
-            window.location.href = user.link;
-          } else {
-            errorDiv.textContent = "Invalid username or password.";
-          }
-        }, 1500); // Simulate loading delay
-      } catch (err) {
-        loading.style.display = "none";
-        errorDiv.textContent = "Error loading user data.";
-      }
-    }
-  </script>
+  <script src="login.js"></script>
 </body>
 </html>

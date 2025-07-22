@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <title>ورود به سیستم</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <h2>ورود به سیستم</h2>
+    <input type="text" id="username" placeholder="نام کاربری">
+    <input type="password" id="password" placeholder="رمز عبور">
+    <button onclick="login()">ورود</button>
+    <div id="error"></div>
+  </div>
+
+  <script>
+    async function login() {
+      const username = document.getElementById("username").value.trim();
+      const password = document.getElementById("password").value.trim();
+      const errorDiv = document.getElementById("error");
+
+      try {
+        const response = await fetch("data.json");
+        const users = await response.json();
+
+        const user = users.find(u => u.username === username && u.password === password);
+
+        if (user) {
+          window.location.href = user.link;
+        } else {
+          errorDiv.textContent = "نام کاربری یا رمز عبور اشتباه است.";
+        }
+      } catch (err) {
+        errorDiv.textContent = "خطا در بارگیری داده‌ها.";
+        console.error(err);
+      }
+    }
+  </script>
+</body>
+</html>

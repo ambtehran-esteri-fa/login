@@ -1,17 +1,20 @@
 <!DOCTYPE html>
-<html lang="fa" dir="rtl">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>ورود به سیستم</title>
+  <title>Login Page</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <div class="container">
-    <h2>ورود به سیستم</h2>
-    <input type="text" id="username" placeholder="نام کاربری">
-    <input type="password" id="password" placeholder="رمز عبور">
-    <button onclick="login()">ورود</button>
+    <h2>Login</h2>
+    <input type="text" id="username" placeholder="Username">
+    <input type="password" id="password" placeholder="Password">
+    <button onclick="login()">Login</button>
+    <div id="loading">
+      <img src="loading.gif" alt="Loading..." width="40">
+    </div>
     <div id="error"></div>
   </div>
 
@@ -20,6 +23,10 @@
       const username = document.getElementById("username").value.trim();
       const password = document.getElementById("password").value.trim();
       const errorDiv = document.getElementById("error");
+      const loading = document.getElementById("loading");
+
+      errorDiv.textContent = "";
+      loading.style.display = "block";
 
       try {
         const response = await fetch("data.json");
@@ -27,15 +34,17 @@
 
         const user = users.find(u => u.username === username && u.password === password);
 
-        if (user) {
-          // فقط در صورت مطابقت کاربر را به لینک هدایت می‌کند
-          window.location.href = user.link;
-        } else {
-          errorDiv.textContent = "نام کاربری یا رمز عبور اشتباه است.";
-        }
+        setTimeout(() => {
+          loading.style.display = "none";
+          if (user) {
+            window.location.href = user.link;
+          } else {
+            errorDiv.textContent = "Invalid username or password.";
+          }
+        }, 1500); // Simulate loading delay
       } catch (err) {
-        errorDiv.textContent = "خطا در بارگیری داده‌ها.";
-        console.error(err);
+        loading.style.display = "none";
+        errorDiv.textContent = "Error loading user data.";
       }
     }
   </script>
